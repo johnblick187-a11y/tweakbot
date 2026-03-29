@@ -1,0 +1,13 @@
+packages:
+  "framer-motion": "For smooth layout animations and conversational UI presence"
+  "react-markdown": "To render assistant markdown responses"
+  "remark-gfm": "For github flavored markdown (tables, strikethrough) in assistant responses"
+  "react-syntax-highlighter": "For beautiful code block syntax highlighting"
+  "react-textarea-autosize": "For the auto-expanding chat input textarea"
+  "date-fns": "For formatting conversation dates"
+  "clsx": "For conditional tailwind classes"
+  "tailwind-merge": "For merging tailwind classes safely"
+
+notes:
+  - Streaming endpoint /api/openai/conversations/:id/messages uses SSE with custom JSON format.
+  - The frontend relies on React Query hooks from @workspace/api-client-react for non-streaming data.
