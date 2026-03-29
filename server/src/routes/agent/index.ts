@@ -3,10 +3,12 @@ import { db, conversations, messages } from "../../db";
 import { eq, asc } from "drizzle-orm";
 import { runAgentLoop } from "./agentLoop";
 import { getMemoriesForUser, extractAndSaveMemories } from "./memory";
-import { resolveUserId } from "../../middlewares/auth";
 import { logger } from "../../lib/logger";
 
 const router = Router();
+
+const getUserId = (req: any): string =>
+  (req.headers['x-user-id'] as string) ?? process.env.DEFAULT_USER_ID ?? 'admin';
 
 router.get("/conversations", async (_req, res) => {
   const rows = await db.select().from(conversations).orderBy(asc(conversations.createdAt));
@@ -16,7 +18,7 @@ router.get("/conversations", async (_req, res) => {
 router.post("/conversations", async (req, res) => {
   const { title } = req.body;
   if (!title) { res.status(400).json({ error: "title is required" }); return; }
-  const userId = resolveUserId(req);
+  const userId = getUserId(req);
   const [row] = await db.insert(conversations).values({ title, userId }).returning();
   res.status(201).json(row);
 });
@@ -50,7 +52,7 @@ router.post("/conversations/:id/messages", async (req, res) => {
   const { content } = req.body;
   if (!content) { res.status(400).json({ error: "content is required" }); return; }
 
-  const userId = resolveUserId(req);
+  const userId = getUserId(req);
 
   const priorMessages = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
 
