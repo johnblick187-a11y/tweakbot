@@ -1,7 +1,7 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Copy, Check, Pencil, X, Save, GitDiff } from "lucide-react";
+import { Copy, Check, Pencil, X, Save, GitCompare } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { agentFetchHeaders as authHeaders } from "@/api/client";
 
